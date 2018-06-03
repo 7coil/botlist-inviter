@@ -3,12 +3,32 @@
   <head>
     <meta charset="utf-8">
     <title>Discord Bot Invite Services</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    </style>
   </head>
   <body>
-    <h1>This is a temporary interface, which would request a list of bots to invite in the future.</h1>
-    <p><a href="https://discordapp.com/oauth2/authorize?client_id=330003632298917889&amp;scope=bot&amp;permissions=0">DiscordMail</a></p>
-    <p><a href="https://google.co.uk/" target="_blank">Google.co.uk, in a new window</a></p>
+    <h1>Discord Bot Invite Services</h1>
+    <p>This is an example of a user-operated invite service, automating moderator actions by getting the user to invite bots to a server instead of a moderator.</p>
+    <p>To begin, select any bot to invite</p>
+    <ul id="bots">
+    </ul>
     <hr>
-    <i>Moustacheminer Server Services, Copyright 2015 - 2018</i>
+    <i>Test data from <a href="https://bots.discord.pw">bots.discord.pw</a><br>Moustacheminer Server Services, Copyright 2015 - 2018</i>
+    <script src="data.js"></script>
+    <script>
+      const bots = document.getElementById('bots');
+
+      data.forEach((bot) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.innerText = bot.name;
+        a.href = `https://discordapp.com/oauth2/authorize?client_id=${bot.client_id}&scope=bot&permissions=0`;
+        li.appendChild(a);
+        bots.appendChild(li);
+      });
+    </script>
   </body>
 </html>
