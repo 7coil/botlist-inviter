@@ -28,8 +28,6 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  mainWindow.webContents.openDevTools();
-
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -53,6 +51,10 @@ const createWindow = () => {
   mainWindow.webContents.on('navigation-entry-commited', onChangeUrl);
 
   mainWindow.on('before-quit', (e) => {
+    e.preventDefault();
+  });
+
+  mainWindow.webContents.on('new-window', (e) => {
     e.preventDefault();
   });
 };
