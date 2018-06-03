@@ -14,13 +14,14 @@ let mainWindow;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 768,
     kiosk: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, 'renderer.js'),
-      // devTools: false,
+      devTools: false,
     },
   });
 
@@ -50,6 +51,10 @@ const createWindow = () => {
 
   mainWindow.webContents.on('will-navigate', onChangeUrl);
   mainWindow.webContents.on('navigation-entry-commited', onChangeUrl);
+
+  mainWindow.on('before-quit', (e) => {
+    e.preventDefault();
+  });
 };
 
 app.on('ready', createWindow);
