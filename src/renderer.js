@@ -1,4 +1,4 @@
-const electron = require('electron');
+/* eslint-env browser */
 
 // Set the token before the page loads
 if (window.location.hostname === 'discordapp.com') {

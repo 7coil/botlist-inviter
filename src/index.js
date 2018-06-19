@@ -33,27 +33,31 @@ const createWindow = () => {
     mainWindow = null;
   });
 
+  // When the URL changes, we need to check if we're on a valid link
   const onChangeUrl = (e, url) => {
     const parsed = urlParser.parse(url);
-    console.log(parsed);
+
+    // If we're on the discord oauth page, allow
     if (parsed.host === 'discordapp.com' && parsed.pathname === '/oauth2/authorize') {
       // discord
-    } else if (parsed.protocol === 'file:') {
+    } else if (parsed.protocol === 'file:') { // if we're on any local file, allow
       // home
-    } else {
-      // Not Home or Discord Invite link. Terminate and go home
+    } else { // If we somehow got somewhere else, go home
       e.preventDefault();
       mainWindow.loadURL(`file://${__dirname}/index.html`);
     }
   };
 
+  // Check link change for hash and on normal page changes
   mainWindow.webContents.on('will-navigate', onChangeUrl);
   mainWindow.webContents.on('navigation-entry-commited', onChangeUrl);
 
+  // You cannot close the app
   mainWindow.on('before-quit', (e) => {
     e.preventDefault();
   });
 
+  // You cannot create new windows
   mainWindow.webContents.on('new-window', (e) => {
     e.preventDefault();
   });

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * Data from https://bots.discord.pw/
  */
