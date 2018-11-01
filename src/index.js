@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import urlParser from 'url';
 import path from 'path';
+import { exec } from 'child_process';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -31,6 +32,7 @@ const createWindow = () => {
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
     mainWindow = null;
+    if (process.platform === 'win32') exec('logoff');
   });
 
   // When the URL changes, we need to check if we're on a valid link
