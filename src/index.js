@@ -1,7 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import urlParser from 'url';
 import path from 'path';
-import { exec } from 'child_process';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -19,6 +18,7 @@ const createWindow = () => {
     height: 768,
     kiosk: true,
     frame: false,
+    closable: false,
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, 'renderer.js'),
@@ -29,11 +29,6 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  // Emitted when the window is closed.
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-    if (process.platform === 'win32') exec('logoff');
-  });
 
   // When the URL changes, we need to check if we're on a valid link
   const onChangeUrl = (e, url) => {
@@ -54,9 +49,9 @@ const createWindow = () => {
   mainWindow.webContents.on('will-navigate', onChangeUrl);
   mainWindow.webContents.on('navigation-entry-commited', onChangeUrl);
 
-  // You cannot close the app
-  mainWindow.on('before-quit', (e) => {
-    e.preventDefault();
+  // Emitted when the window is closed.
+  mainWindow.on('closed', () => {
+    mainWindow = null;
   });
 
   // You cannot create new windows

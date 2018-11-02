@@ -1,7 +1,7 @@
 {
   "name": "botsystem",
   "productName": "botsystem",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
@@ -19,6 +19,9 @@
       "make_targets": {
         "linux": [
           "deb"
+        ],
+        "win32": [
+          "wix"
         ]
       },
       "electronPackagerConfig": {
@@ -26,6 +29,13 @@
       },
       "electronWinstallerConfig": {
         "name": "botsystem"
+      },
+      "electronWixMsiConfig": {
+        "name": "botlist-inviter",
+        "shortName": "botlist",
+        "manufacturer": "Moustacheminer Server Services",
+        "upgradeCode": "oh-wait-til-i-do-what-i-do-hit-you-with-that-ddu-du-ddu-du-du",
+        "ui": true
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
@@ -49,10 +59,14 @@
     "babel-preset-react": "^6.24.1",
     "electron-forge": "^5.2.2",
     "electron-prebuilt-compile": "2.0.2",
+    "electron-wix-msi": "^2.1.1",
     "eslint": "^3",
     "eslint-config-airbnb": "^15",
     "eslint-plugin-import": "^2",
     "eslint-plugin-jsx-a11y": "^5",
     "eslint-plugin-react": "^7"
+  },
+  "resolutions": {
+    "electron-wix-msi": "^2.1.1"
   }
 }
