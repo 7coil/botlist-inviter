@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import urlParser from 'url';
 import path from 'path';
+import { exec } from 'child_process';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -27,8 +28,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
-
+  mainWindow.loadURL('http://ls.terminal.ink/bots/kiosk');
 
   // When the URL changes, we need to check if we're on a valid link
   const onChangeUrl = (e, url) => {
@@ -37,11 +37,14 @@ const createWindow = () => {
     // If we're on the discord oauth page, allow
     if (parsed.host === 'discordapp.com' && parsed.pathname === '/oauth2/authorize') {
       // discord
-    } else if (parsed.protocol === 'file:') { // if we're on any local file, allow
-      // home
+    } else if (parsed.host === 'ls.terminal.ink') {
+      // webserver
+    } else if (parsed.protocol === 'x-ls-terminal-ink:' && parsed.host === 'disconnect') { // if we're on any local file, allow
+      app.exit();
+      e.preventDefault();
     } else { // If we somehow got somewhere else, go home
       e.preventDefault();
-      mainWindow.loadURL(`file://${__dirname}/index.html`);
+      mainWindow.loadURL('http://ls.terminal.ink/bots/kiosk');
     }
   };
 
